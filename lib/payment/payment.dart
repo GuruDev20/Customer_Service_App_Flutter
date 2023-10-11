@@ -18,7 +18,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payment Screen'),
+        backgroundColor: Color.fromARGB(255, 9, 11, 28),
+        leading: Icon(
+          Icons.miscellaneous_services,
+          size: 35.0,
+          color: Colors.white,
+        ),
+        title: Text(
+          'Payment',
+          style: TextStyle(fontSize: 25.0),
+        ),
+        titleSpacing: 0,
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
@@ -39,23 +49,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ListTile(
                     title: Text('Mobile Number: ${widget.mobileNumber}'),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PaymentSelectionScreen(
+                            username: widget.username,
+                            mobileNumber: widget.mobileNumber,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text('Continue'),
+                  ),
                 ],
               ),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PaymentSelectionScreen(
-                      username: widget.username,
-                      mobileNumber: widget.mobileNumber,
-                    ),
-                  ),
-                );
-              },
-              child: Text('Continue'),
             ),
           ],
         ),
