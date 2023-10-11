@@ -9,6 +9,7 @@ import 'package:customer_service_app_flutter/screens/login.dart';
 import 'package:customer_service_app_flutter/screens/notification_screen.dart';
 import 'package:customer_service_app_flutter/screens/order_screen.dart';
 import 'package:customer_service_app_flutter/payment/payment.dart';
+import 'package:customer_service_app_flutter/screens/orders.dart';
 import 'package:customer_service_app_flutter/screens/process.dart';
 import 'package:customer_service_app_flutter/screens/register.dart';
 import 'package:customer_service_app_flutter/screens/service.dart';
@@ -51,7 +52,7 @@ class MainApp extends StatelessWidget {
         PaymentScreen.id:(context)=> PaymentScreen(username: '', mobileNumber: '', serviceName: '',),
         CashOnDeliveryScreen.id:(context)=> CashOnDeliveryScreen(username: '', mobileNumber:'', serviceName: '',),
         OnlinePaymentScreen.id:(context)=> OnlinePaymentScreen(username: '', mobileNumber:'', serviceName: '',),
-        
+        MyOrders.id:(context)=>const MyOrders(),
       },
     );
   }
