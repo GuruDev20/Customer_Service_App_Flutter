@@ -6,8 +6,9 @@ class PaymentScreen extends StatefulWidget {
   static const String id = "PaymentScreen";
   final String username;
   final String mobileNumber;
+  final String serviceName;
 
-  PaymentScreen({Key? key, required this.username, required this.mobileNumber})
+  PaymentScreen({Key? key, required this.username, required this.mobileNumber,required this.serviceName})
       : super(key: key);
 
   @override
@@ -123,6 +124,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     builder: (context) => CashOnDeliveryScreen(
                                       username: widget.username,
                                       mobileNumber: widget.mobileNumber,
+                                      serviceName: widget.serviceName,
                                     ),
                                   ),
                                 );
@@ -142,7 +144,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   MaterialPageRoute(
                                     builder: (context) => OnlinePaymentScreen(
                                       username: widget.username,
-                                      mobileNumber: widget.mobileNumber,
+                                      mobileNumber: widget.mobileNumber, 
+                                      serviceName: widget.serviceName,
+
                                     ),
                                   ),
                                 );

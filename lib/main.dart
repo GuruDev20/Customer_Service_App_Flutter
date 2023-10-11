@@ -48,9 +48,9 @@ class MainApp extends StatelessWidget {
         Employer.id:(context) => const Employer(),
         ServicesScreen.id:(context) => const ServicesScreen(),
         ProcessScreen.id:(context) => ProcessScreen(text: '',),
-        PaymentScreen.id:(context)=> PaymentScreen(username: '', mobileNumber: '',),
-        CashOnDeliveryScreen.id:(context)=> CashOnDeliveryScreen(username: '', mobileNumber:''),
-        OnlinePaymentScreen.id:(context)=> OnlinePaymentScreen(username: '', mobileNumber:''),
+        PaymentScreen.id:(context)=> PaymentScreen(username: '', mobileNumber: '', serviceName: '',),
+        CashOnDeliveryScreen.id:(context)=> CashOnDeliveryScreen(username: '', mobileNumber:'', serviceName: '',),
+        OnlinePaymentScreen.id:(context)=> OnlinePaymentScreen(username: '', mobileNumber:'', serviceName: '',),
         
       },
     );

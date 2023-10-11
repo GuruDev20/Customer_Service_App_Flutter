@@ -5,8 +5,8 @@ class OnlinePaymentScreen extends StatelessWidget {
   static const String id = "online_payment";
   final String username;
   final String mobileNumber;
-
-  OnlinePaymentScreen({required this.username, required this.mobileNumber});
+  final String serviceName;
+  OnlinePaymentScreen({required this.username, required this.mobileNumber,required this.serviceName});
 
   @override
   Widget build(BuildContext context) {

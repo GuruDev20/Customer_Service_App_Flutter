@@ -5,8 +5,8 @@ class CashOnDeliveryScreen extends StatelessWidget {
   static const String id = "CashOnDeliveryScreen";
   final String username;
   final String mobileNumber;
-
-  CashOnDeliveryScreen({required this.username, required this.mobileNumber});
+  final String serviceName;
+  CashOnDeliveryScreen({required this.username, required this.mobileNumber,required this.serviceName});
 
   @override
   Widget build(BuildContext context) {
