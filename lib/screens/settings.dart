@@ -234,7 +234,7 @@ class _SettingScreenState extends State<SettingScreen> {
               case 1:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Orders(username: '', mobileNumber: '', paymentMethod: '',)),
+                  MaterialPageRoute(builder: (context) => Orders(username: '', mobileNumber: '', paymentMethod: '', serviceName: '',)),
                 );
                 break;
               case 2:

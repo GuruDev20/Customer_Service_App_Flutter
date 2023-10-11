@@ -8,7 +8,11 @@ class PaymentScreen extends StatefulWidget {
   final String mobileNumber;
   final String serviceName;
 
-  PaymentScreen({Key? key, required this.username, required this.mobileNumber,required this.serviceName})
+  PaymentScreen(
+      {Key? key,
+      required this.username,
+      required this.mobileNumber,
+      required this.serviceName})
       : super(key: key);
 
   @override
@@ -50,6 +54,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
+              elevation: 10.0,
               shadowColor: Colors.pink,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -95,6 +100,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
+                elevation: 10.0,
+                shadowColor: Colors.pink,
                 child: Column(
                   children: [
                     Padding(
@@ -129,7 +136,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   ),
                                 );
                               },
-                              child: Text('Cash on Delivery'),
+                              child: Text('Cash On Delivery'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Color(0xFF1C1E42),
                               ),
@@ -144,9 +151,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   MaterialPageRoute(
                                     builder: (context) => OnlinePaymentScreen(
                                       username: widget.username,
-                                      mobileNumber: widget.mobileNumber, 
+                                      mobileNumber: widget.mobileNumber,
                                       serviceName: widget.serviceName,
-
                                     ),
                                   ),
                                 );

@@ -33,7 +33,7 @@ class OnlinePaymentScreen extends StatelessWidget {
                     builder: (context) => Orders(
                       username: username,
                       mobileNumber: mobileNumber,
-                      paymentMethod: 'Online Payment',
+                      paymentMethod: 'Online Payment', serviceName: serviceName,
                     ),
                   ),
                 );

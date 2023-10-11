@@ -12,11 +12,12 @@ class Orders extends StatefulWidget {
   final String username;
   final String mobileNumber;
   final String paymentMethod;
-
+  final String serviceName;
   Orders({
     required this.username,
     required this.mobileNumber,
     required this.paymentMethod,
+    required this. serviceName,
   });
 
   @override

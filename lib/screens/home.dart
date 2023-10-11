@@ -244,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (context) => Orders(
                             username: '',
                             mobileNumber: '',
-                            paymentMethod: '',
+                            paymentMethod: '', serviceName: '',
                           )),
                 );
                 break;
