@@ -1,4 +1,5 @@
-import 'package:customer_service_app_flutter/payment/paymentselection.dart';
+import 'package:customer_service_app_flutter/payment/cashOndelivery.dart';
+import 'package:customer_service_app_flutter/payment/online.dart';
 import 'package:flutter/material.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -14,11 +15,19 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  bool showPaymentSelection = false;
+
+  void togglePaymentSelection() {
+    setState(() {
+      showPaymentSelection = !showPaymentSelection;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 9, 11, 28),
+        backgroundColor: Color(0xFF090B1C),
         leading: Icon(
           Icons.miscellaneous_services,
           size: 35.0,
@@ -36,7 +45,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Card(
-              color: Color.fromARGB(255, 15, 17, 42),
+              color: Color(0xFF0F112A),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
@@ -53,21 +62,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PaymentSelectionScreen(
-                                username: widget.username,
-                                mobileNumber: widget.mobileNumber,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text('Continue'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 28, 30, 66),
+                      child: Container(
+                        width: 115,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            togglePaymentSelection();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF1C1E42),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Continue'),
+                              Icon(Icons.keyboard_arrow_right),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -78,24 +88,77 @@ class _PaymentScreenState extends State<PaymentScreen> {
             SizedBox(
               height: 20,
             ),
-            Card(
-              color: Color.fromARGB(255, 15, 17, 42),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Center(
+            if (showPaymentSelection)
+              Card(
+                color: Color(0xFF0F112A),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Center(
                         child: Icon(
-                      Icons.miscellaneous_services_outlined,
-                      size: 120,
-                    )),
-                  )
-                ],
+                          Icons.miscellaneous_services_outlined,
+                          size: 120,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        padding: EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Select a Payment Method'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CashOnDeliveryScreen(
+                                      username: widget.username,
+                                      mobileNumber: widget.mobileNumber,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text('Cash on Delivery'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xFF1C1E42),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OnlinePaymentScreen(
+                                      username: widget.username,
+                                      mobileNumber: widget.mobileNumber,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text('Online Payment'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xFF1C1E42),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            )
           ],
         ),
       ),

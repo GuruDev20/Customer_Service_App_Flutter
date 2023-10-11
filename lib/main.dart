@@ -1,6 +1,5 @@
 import 'package:customer_service_app_flutter/payment/cashOndelivery.dart';
 import 'package:customer_service_app_flutter/payment/online.dart';
-import 'package:customer_service_app_flutter/payment/paymentselection.dart';
 import 'package:customer_service_app_flutter/screens/edit_screen.dart';
 import 'package:customer_service_app_flutter/screens/employee.dart';
 import 'package:customer_service_app_flutter/screens/feedback_screen.dart';
@@ -50,7 +49,6 @@ class MainApp extends StatelessWidget {
         ServicesScreen.id:(context) => const ServicesScreen(),
         ProcessScreen.id:(context) => ProcessScreen(text: '',),
         PaymentScreen.id:(context)=> PaymentScreen(username: '', mobileNumber: '',),
-        PaymentSelectionScreen.id:(context)=> PaymentSelectionScreen(username: '', mobileNumber: '',),
         CashOnDeliveryScreen.id:(context)=> CashOnDeliveryScreen(username: '', mobileNumber:''),
         OnlinePaymentScreen.id:(context)=> OnlinePaymentScreen(username: '', mobileNumber:''),
         
