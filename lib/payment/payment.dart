@@ -41,35 +41,38 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 borderRadius: BorderRadius.circular(30),
               ),
               shadowColor: Colors.pink,
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text('Username: ${widget.username}'),
-                  ),
-                  ListTile(
-                    title: Text('Mobile Number: ${widget.mobileNumber}'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PaymentSelectionScreen(
-                              username: widget.username,
-                              mobileNumber: widget.mobileNumber,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text('Username: ${widget.username}'),
+                    ),
+                    ListTile(
+                      title: Text('Mobile Number: ${widget.mobileNumber}'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentSelectionScreen(
+                                username: widget.username,
+                                mobileNumber: widget.mobileNumber,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      child: Text('Continue'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 28, 30, 66),
+                          );
+                        },
+                        child: Text('Continue'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 28, 30, 66),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             SizedBox(
