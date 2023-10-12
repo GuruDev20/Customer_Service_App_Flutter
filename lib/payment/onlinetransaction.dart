@@ -27,6 +27,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
       ),
       body: Container(
         width: double.infinity,
+        height: 250,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Card(
@@ -65,12 +66,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   text: 'Credit/Debit card',
                   onPressed: () {},
                 ),
-                Divider(
-                  color: Colors.grey,
-                  thickness: 1,
-                  indent: 10,
-                  endIndent: 10,
-                ),
               ],
             ),
           ),
@@ -81,7 +76,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
 }
 
 class PaymentOption extends StatelessWidget {
-  PaymentOption({required this.icon, required this.text, required this.onPressed});
+  PaymentOption(
+      {required this.icon, required this.text, required this.onPressed});
   final IconData icon;
   final VoidCallback onPressed;
   final String text;
