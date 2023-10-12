@@ -4,12 +4,15 @@ import 'package:customer_service_app_flutter/screens/location_screen.dart';
 import 'package:customer_service_app_flutter/screens/login.dart';
 import 'package:customer_service_app_flutter/screens/notification_screen.dart';
 import 'package:customer_service_app_flutter/screens/order_screen.dart';
+import 'package:customer_service_app_flutter/screens/orders.dart';
 import 'package:customer_service_app_flutter/screens/register.dart';
 import 'package:customer_service_app_flutter/screens/service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 enum UserType { Consumer, Employee }
+
 class SettingScreen extends StatefulWidget {
   static const String id = "setting_screen";
   const SettingScreen({Key? key}) : super(key: key);
@@ -142,7 +145,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               const Padding(
                 padding: EdgeInsets.only(
-                    top: 22.0, left: 5.0, right: 5.0, bottom: 5.0),
+                    top: 20.0, left: 5.0, right: 5.0, bottom: 5.0),
                 child: Text(
                   'Account Settings',
                   style: TextStyle(
@@ -177,6 +180,16 @@ class _SettingScreenState extends State<SettingScreen> {
                   onTap: () {
                     Navigator.pushReplacementNamed(
                         context, NotificationsScreen.id);
+                  }),
+              const Divider(
+                height: 6.0,
+                color: Colors.white,
+              ),
+              Options(
+                  icon: Icons.notifications_active,
+                  text: 'My Orders',
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, MyOrders.id);
                   }),
               const Divider(
                 height: 6.0,
@@ -234,7 +247,13 @@ class _SettingScreenState extends State<SettingScreen> {
               case 1:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Orders(username: '', mobileNumber: '', paymentMethod: '', serviceName: '',)),
+                  MaterialPageRoute(
+                      builder: (context) => Orders(
+                            username: '',
+                            mobileNumber: '',
+                            paymentMethod: '',
+                            serviceName: '',
+                          )),
                 );
                 break;
               case 2:

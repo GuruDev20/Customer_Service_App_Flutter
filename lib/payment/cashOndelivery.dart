@@ -48,7 +48,10 @@ class CashOnDeliveryScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           backgroundColor: Color(0xFF0F112A),
-          title: Text('Would you like to Call our service agent?'),
+          title: Text(
+            'Would you like to rate our Service?',
+            style: TextStyle(fontSize: 18),
+          ),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
