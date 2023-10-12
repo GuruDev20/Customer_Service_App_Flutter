@@ -264,7 +264,7 @@ class Services extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProcessScreen(text: text),
+            builder: (context) => ProcessScreen(text: text, ),
           ),
         );
       },

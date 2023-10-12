@@ -7,7 +7,6 @@ import 'package:location/location.dart';
 class ProcessScreen extends StatefulWidget {
   static const String id = "ProcessScreen";
   final String text;
-
   ProcessScreen({required this.text});
 
   @override
@@ -15,6 +14,7 @@ class ProcessScreen extends StatefulWidget {
 }
 
 class _ProcessScreenState extends State<ProcessScreen> {
+  String selectedEmployeeEmail = "";
   GoogleMapController? mapController;
   Set<Marker> markers = Set<Marker>();
   LatLng initialCameraPosition = LatLng(0.0, 0.0);
@@ -48,17 +48,19 @@ class _ProcessScreenState extends State<ProcessScreen> {
     markers.clear();
     for (QueryDocumentSnapshot<Map<String, dynamic>> document
         in querySnapshot.docs) {
-      final Map<String, dynamic> data = document.data();
-      final double latitude = data['latitude'] ?? 0.0;
-      final double longitude = data['longitude'] ?? 0.0;
-      final String username = data['Username'] ?? '';
-      final String mobileNumber = data['Mobile Number'] ?? '';
-
+      final double latitude = document['latitude'] ?? 0.0;
+      final double longitude = document['longitude'] ?? 0.0;
+      final String username = document['Username'] ?? '';
+      final String mobileNumber = document['Mobile Number'] ?? '';
+      final String employeeEmail = document.id; // Use the document ID as email
+      setState(() {
+        selectedEmployeeEmail = employeeEmail;
+      });
       if (latitude != 0.0 && longitude != 0.0) {
         setState(() {
           markers.add(
             Marker(
-              markerId: MarkerId(document.id),
+              markerId: MarkerId(employeeEmail),
               position: LatLng(latitude, longitude),
               infoWindow: InfoWindow(
                 title: username,
@@ -77,6 +79,12 @@ class _ProcessScreenState extends State<ProcessScreen> {
     }
   }
 
+  // Add this method to handle marker tap
+  void handleMarkerTap(Marker marker) {
+    fetchEmployeeInformation(marker.markerId.value, marker.infoWindow.title!);
+    toggleTabBarVisibility();
+  }
+
   Future<void> setupUserLocation() async {
     LocationData locationData = await location.getLocation();
     setState(() {
@@ -85,7 +93,8 @@ class _ProcessScreenState extends State<ProcessScreen> {
         position:
             LatLng(locationData.latitude ?? 0.0, locationData.longitude ?? 0.0),
         icon: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueBlue), // Blue marker
+          BitmapDescriptor.hueBlue, // Blue marker
+        ),
         infoWindow: InfoWindow(
           title: 'Your Location',
         ),
@@ -94,56 +103,7 @@ class _ProcessScreenState extends State<ProcessScreen> {
   }
 
   Future<void> fetchEmployeeInformation(
-      String employeeEmail, String username) async {
-    // Fetch ratings for the employee using the employee email
-    final DocumentSnapshot<Map<String, dynamic>> ratingsSnapshot =
-        await FirebaseFirestore.instance
-            .collection('ratings')
-            .doc(employeeEmail)
-            .get();
-
-    if (ratingsSnapshot.exists) {
-      final Map<String, dynamic> ratingsData = ratingsSnapshot.data()!;
-
-      // Retrieve the 'Ratings' field from the ratingsData
-      final List<dynamic> ratingValues = ratingsData['Ratings'] ?? [];
-
-      if (ratingValues.isNotEmpty) {
-        double totalRating = 0;
-
-        // Calculate the total rating
-        for (var ratingValue in ratingValues) {
-          totalRating += ratingValue.toDouble();
-        }
-
-        // Calculate the mean rating
-        double meanRating = totalRating / ratingValues.length;
-
-        setState(() {
-          this.meanRating = meanRating;
-        });
-
-        print('Employee Username: $username');
-        print('Mean Rating: $meanRating');
-      } else {
-        setState(() {
-          meanRating = 0.0; // No ratings found
-        });
-
-        print('Employee Username: $username');
-        print('No Ratings Found');
-      }
-    } else {
-      setState(() {
-        meanRating = 0.0; // Employee not found in 'ratings'
-      });
-
-      print('Employee Email not found: $employeeEmail');
-    }
-
-    print('Username: $username');
-    print('Employee Email: $employeeEmail');
-  }
+      String employeeEmail, String username) async {}
 
   @override
   Widget build(BuildContext context) {
@@ -212,9 +172,8 @@ class _ProcessScreenState extends State<ProcessScreen> {
                   // Handle marker tap event here
                   for (Marker marker in markers) {
                     if (marker.infoWindow.snippet == latLng.toString()) {
-                      fetchEmployeeInformation(
-                          marker.markerId.value, marker.infoWindow.title!);
-                      toggleTabBarVisibility();
+                      handleMarkerTap(
+                          marker); // Call the method to handle the tap
                       break;
                     }
                   }

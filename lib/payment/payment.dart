@@ -7,12 +7,11 @@ class PaymentScreen extends StatefulWidget {
   final String username;
   final String mobileNumber;
   final String serviceName;
-
   PaymentScreen(
       {Key? key,
       required this.username,
       required this.mobileNumber,
-      required this.serviceName})
+      required this.serviceName,})
       : super(key: key);
 
   @override

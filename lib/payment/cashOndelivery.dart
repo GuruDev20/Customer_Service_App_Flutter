@@ -1,10 +1,9 @@
 import 'package:customer_service_app_flutter/screens/orders.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class CashOnDeliveryScreen extends StatelessWidget {
+class CashOnDeliveryScreen extends StatefulWidget {
   static const String id = "CashOnDeliveryScreen";
   final String username;
   final String mobileNumber;
@@ -16,15 +15,46 @@ class CashOnDeliveryScreen extends StatelessWidget {
     required this.serviceName,
   });
 
+  @override
+  _CashOnDeliveryScreenState createState() => _CashOnDeliveryScreenState();
+}
+
+class _CashOnDeliveryScreenState extends State<CashOnDeliveryScreen> {
+  int rating = 0;
+  void updateRating(int newRating) {
+    setState(() {
+      rating = newRating;
+    });
+  }
+
+  Future<void> submitRating(int userRating) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final employeeEmail = widget.username;
+
+      final ratingsCollection =
+          FirebaseFirestore.instance.collection('ratings');
+      Map<String, dynamic> ratingData = {
+        'userEmail': user.email,
+        'ratingValue': userRating,
+        'timestamp': FieldValue.serverTimestamp(),
+      };
+
+      await ratingsCollection.doc(employeeEmail).set(ratingData);
+
+      Navigator.of(context).pop();
+    }
+  }
+
   void _placeOrder(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       final ordersCollection = FirebaseFirestore.instance.collection('orders');
       final documentName = user.email;
       Map<String, dynamic> orderData = {
-        'username': username,
-        'mobileNumber': mobileNumber,
-        'serviceName': serviceName,
+        'username': widget.username,
+        'mobileNumber': widget.mobileNumber,
+        'serviceName': widget.serviceName,
         'paymentMethod': 'Cash on Delivery',
         'timestamp': FieldValue.serverTimestamp(),
       };
@@ -52,20 +82,34 @@ class CashOnDeliveryScreen extends StatelessWidget {
             'Would you like to rate our Service?',
             style: TextStyle(fontSize: 18),
           ),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  callMobileNumber(context);
-                },
-                child: Text('Yes'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, MyOrders.id);
-                },
-                child: Text('No'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      showRatingDialog(context);
+                    },
+                    child: Text('Yes'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Color(0xFF1C1E42)),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, MyOrders.id);
+                    },
+                    child: Text('No'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Color(0xFF1C1E42)),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -74,16 +118,58 @@ class CashOnDeliveryScreen extends StatelessWidget {
     );
   }
 
-  void callMobileNumber(BuildContext context) async {
-    final Uri url = Uri(
-      scheme: 'tel',
-      path: mobileNumber,
+  void showRatingDialog(BuildContext context) {
+    int userRating = 0;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              backgroundColor: Color(0xFF0F112A),
+              title: Text(
+                'Rate our Service',
+                style: TextStyle(fontSize: 18),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (index) {
+                      final starColor =
+                          index < userRating ? Colors.yellow : Colors.grey;
+                      return IconButton(
+                        icon: Icon(Icons.star, color: starColor),
+                        onPressed: () {
+                          setState(() {
+                            userRating = index + 1;
+                          });
+                        },
+                      );
+                    }),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      submitRating(userRating);
+                    },
+                    child: Text('Submit'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Color(0xFF1C1E42)),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      print('no url available');
-    }
   }
 
   @override
@@ -124,19 +210,19 @@ class CashOnDeliveryScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Username: $username',
+                          'Username: ${widget.username}',
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text('Mobile Number: $mobileNumber',
+                        child: Text('Mobile Number: ${widget.mobileNumber}',
                             style: TextStyle(fontSize: 20)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Service Name: $serviceName',
+                          'Service Name: ${widget.serviceName}',
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
