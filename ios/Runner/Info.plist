@@ -50,11 +50,5 @@
 	<string>NSLocationAlwaysUsageDescription</string>
 	<key>Want to display location on map, and track it.</key>
 	<key>LSApplicationQueriesSchemes</key>
-	<array>
-	<string>sms</string>
-	<string>tel</string>
-	</array>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Can we access the phone to make calls?</string>
 </dict>
 </plist>

@@ -72,14 +72,14 @@ class CashOnDeliveryScreen extends StatelessWidget {
   }
 
   void callMobileNumber(BuildContext context) async {
-    if (await canLaunch('tel:$mobileNumber')) {
-      await launch('tel:$mobileNumber');
+    final Uri url = Uri(
+      scheme: 'tel',
+      path: mobileNumber,
+    );
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Could not make the call.'),
-        ),
-      );
+      print('no url available');
     }
   }
 
