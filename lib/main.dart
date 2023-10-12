@@ -1,5 +1,6 @@
 import 'package:customer_service_app_flutter/payment/cashOndelivery.dart';
 import 'package:customer_service_app_flutter/payment/online.dart';
+import 'package:customer_service_app_flutter/payment/onlinetransaction.dart';
 import 'package:customer_service_app_flutter/screens/edit_screen.dart';
 import 'package:customer_service_app_flutter/screens/employee.dart';
 import 'package:customer_service_app_flutter/screens/feedback_screen.dart';
@@ -53,6 +54,7 @@ class MainApp extends StatelessWidget {
         CashOnDeliveryScreen.id:(context)=> CashOnDeliveryScreen(username: '', mobileNumber:'', serviceName: '',),
         OnlinePaymentScreen.id:(context)=> OnlinePaymentScreen(username: '', mobileNumber:'', serviceName: '',),
         MyOrders.id:(context)=>const MyOrders(),
+        TransactionScreen.id:(context)=>TransactionScreen()
       },
     );
   }

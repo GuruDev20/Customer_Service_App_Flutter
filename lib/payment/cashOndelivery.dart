@@ -120,7 +120,6 @@ class _CashOnDeliveryScreenState extends State<CashOnDeliveryScreen> {
 
   void showRatingDialog(BuildContext context) {
     int userRating = 0;
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
