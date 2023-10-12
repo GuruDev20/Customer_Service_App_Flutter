@@ -50,6 +50,17 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   endIndent: 10,
                 ),
                 PaymentOption(
+                  icon: FontAwesomeIcons.paypal,
+                  text: 'Paytm',
+                  onPressed: () {},
+                ),
+                Divider(
+                  color: Colors.grey,
+                  thickness: 1,
+                  indent: 10,
+                  endIndent: 10,
+                ),
+                PaymentOption(
                   icon: FontAwesomeIcons.creditCard,
                   text: 'Credit/Debit card',
                   onPressed: () {},
@@ -70,8 +81,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
 }
 
 class PaymentOption extends StatelessWidget {
-  PaymentOption(
-      {required this.icon, required this.text, required this.onPressed});
+  PaymentOption({required this.icon, required this.text, required this.onPressed});
   final IconData icon;
   final VoidCallback onPressed;
   final String text;
