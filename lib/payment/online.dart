@@ -8,10 +8,12 @@ class OnlinePaymentScreen extends StatefulWidget {
   final String username;
   final String mobileNumber;
   final String serviceName;
-  OnlinePaymentScreen(
-      {required this.username,
-      required this.mobileNumber,
-      required this.serviceName});
+
+  OnlinePaymentScreen({
+    required this.username,
+    required this.mobileNumber,
+    required this.serviceName,
+  });
 
   @override
   State<OnlinePaymentScreen> createState() => _OnlinePaymentScreenState();
@@ -19,10 +21,11 @@ class OnlinePaymentScreen extends StatefulWidget {
 
 class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
   final ordersCollection = FirebaseFirestore.instance.collection('orders');
+
   void _placeOrder(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      final documentName = user.email;
+      final documentName = user.email ?? ''; // Use a fallback if email is null.
       Map<String, dynamic> orderData = {
         'username': widget.username,
         'mobileNumber': widget.mobileNumber,
@@ -31,10 +34,13 @@ class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
         'timestamp': FieldValue.serverTimestamp(),
       };
       await ordersCollection.doc(documentName).set(orderData);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => PaymentOnlineScreen()));
     }
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PaymentOnlineScreen()),
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,8 +85,10 @@ class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text('Mobile Number: ${widget.mobileNumber}',
-                            style: TextStyle(fontSize: 20)),
+                        child: Text(
+                          'Mobile Number: ${widget.mobileNumber}',
+                          style: TextStyle(fontSize: 20),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -119,7 +127,7 @@ class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
               Icons.miscellaneous_services,
               size: 160,
             ),
-          )
+          ),
         ],
       ),
     );
