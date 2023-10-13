@@ -2,7 +2,6 @@ import 'package:customer_service_app_flutter/screens/edit_screen.dart';
 import 'package:customer_service_app_flutter/screens/home.dart';
 import 'package:customer_service_app_flutter/screens/location_screen.dart';
 import 'package:customer_service_app_flutter/screens/login.dart';
-import 'package:customer_service_app_flutter/screens/notification_screen.dart';
 import 'package:customer_service_app_flutter/screens/order_screen.dart';
 import 'package:customer_service_app_flutter/screens/orders.dart';
 import 'package:customer_service_app_flutter/screens/register.dart';
@@ -169,17 +168,6 @@ class _SettingScreenState extends State<SettingScreen> {
                   text: 'Address & Location',
                   onTap: () {
                     Navigator.pushReplacementNamed(context, LocationScreen.id);
-                  }),
-              const Divider(
-                height: 6.0,
-                color: Colors.white,
-              ),
-              Options(
-                  icon: Icons.notifications_active,
-                  text: 'Notifications',
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, NotificationsScreen.id);
                   }),
               const Divider(
                 height: 6.0,

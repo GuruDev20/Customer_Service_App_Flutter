@@ -42,7 +42,8 @@ class _CashOnDeliveryScreenState extends State<CashOnDeliveryScreen> {
 
       await ratingsCollection.doc(employeeEmail).set(ratingData);
 
-      Navigator.of(context).pop();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MyOrders()));
     }
   }
 

@@ -7,7 +7,6 @@ import 'package:customer_service_app_flutter/screens/feedback_screen.dart';
 import 'package:customer_service_app_flutter/screens/home.dart';
 import 'package:customer_service_app_flutter/screens/location_screen.dart';
 import 'package:customer_service_app_flutter/screens/login.dart';
-import 'package:customer_service_app_flutter/screens/notification_screen.dart';
 import 'package:customer_service_app_flutter/screens/order_screen.dart';
 import 'package:customer_service_app_flutter/payment/payment.dart';
 import 'package:customer_service_app_flutter/screens/orders.dart';
@@ -45,7 +44,6 @@ class MainApp extends StatelessWidget {
         SettingScreen.id: (context) => const SettingScreen(),
         EditScreen.id: (context) => const EditScreen(),
         LocationScreen.id: (context) => const LocationScreen(),
-        NotificationsScreen.id: (context) => const NotificationsScreen(),
         FeedbackScreen.id: (context) => const FeedbackScreen(),
         Orders.id: (context) => Orders(username: '',mobileNumber: '',paymentMethod: '',serviceName: '',),
         UserDetails.id: (context) => const UserDetails(),
