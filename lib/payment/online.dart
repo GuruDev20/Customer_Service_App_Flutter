@@ -37,7 +37,10 @@ class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
     }
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PaymentOnlineScreen()),
+      MaterialPageRoute(
+          builder: (context) => PaymentOnlineScreen(
+                username: widget.username,
+              )),
     );
   }
 

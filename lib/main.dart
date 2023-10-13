@@ -1,5 +1,6 @@
 import 'package:customer_service_app_flutter/payment/cashOndelivery.dart';
 import 'package:customer_service_app_flutter/payment/online.dart';
+import 'package:customer_service_app_flutter/payment/payment_screen.dart';
 import 'package:customer_service_app_flutter/screens/edit_screen.dart';
 import 'package:customer_service_app_flutter/screens/employee.dart';
 import 'package:customer_service_app_flutter/screens/feedback_screen.dart';
@@ -46,34 +47,16 @@ class MainApp extends StatelessWidget {
         LocationScreen.id: (context) => const LocationScreen(),
         NotificationsScreen.id: (context) => const NotificationsScreen(),
         FeedbackScreen.id: (context) => const FeedbackScreen(),
-        Orders.id: (context) => Orders(
-              username: '',
-              mobileNumber: '',
-              paymentMethod: '',
-              serviceName: '',
-            ),
+        Orders.id: (context) => Orders(username: '',mobileNumber: '',paymentMethod: '',serviceName: '',),
         UserDetails.id: (context) => const UserDetails(),
         Employer.id: (context) => const Employer(),
         ServicesScreen.id: (context) => const ServicesScreen(),
-        ProcessScreen.id: (context) => ProcessScreen(
-              text: '',
-            ),
-        PaymentScreen.id: (context) => PaymentScreen(
-              username: '',
-              mobileNumber: '',
-              serviceName: '',
-            ),
-        CashOnDeliveryScreen.id: (context) => CashOnDeliveryScreen(
-              username: '',
-              mobileNumber: '',
-              serviceName: '',
-            ),
-        OnlinePaymentScreen.id: (context) => OnlinePaymentScreen(
-              username: '',
-              mobileNumber: '',
-              serviceName: '',
-            ),
+        ProcessScreen.id: (context) => ProcessScreen(text: '',),
+        PaymentScreen.id: (context) => PaymentScreen(username: '',mobileNumber: '',serviceName: '',),
+        CashOnDeliveryScreen.id: (context) => CashOnDeliveryScreen(username: '',mobileNumber: '',serviceName: '',),
+        OnlinePaymentScreen.id: (context) => OnlinePaymentScreen(username: '',mobileNumber: '',serviceName: '',),
         MyOrders.id: (context) => const MyOrders(),
+        PaymentOnlineScreen.id:(context) => PaymentOnlineScreen(username: '')
       },
     );
   }

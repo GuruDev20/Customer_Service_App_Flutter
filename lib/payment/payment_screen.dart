@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:customer_service_app_flutter/screens/orders.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class PaymentOnlineScreen extends StatefulWidget {
-  const PaymentOnlineScreen({Key? key}) : super(key: key);
+  static const String id = "payment_online";
+  PaymentOnlineScreen({required this.username});
+  final String username;
 
   @override
   State<PaymentOnlineScreen> createState() => _PaymentOnlineScreenState();
@@ -32,6 +36,7 @@ class _PaymentOnlineScreenState extends State<PaymentOnlineScreen> {
 
   void handlerPaymentSuccess(PaymentSuccessResponse response) {
     print('Payment Successful. Payment ID: ${response.paymentId}');
+    directDelivery(context);
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => MyOrders()));
   }
@@ -43,6 +48,134 @@ class _PaymentOnlineScreenState extends State<PaymentOnlineScreen> {
 
   void handlerExternalWallet(ExternalWalletResponse response) {
     print('Using External Wallet: ${response.walletName}');
+  }
+
+  int rating = 0;
+  void updateRating(int newRating) {
+    setState(() {
+      rating = newRating;
+    });
+  }
+
+  Future<void> submitRating(int userRating) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final employeeEmail = widget.username;
+
+      final ratingsCollection =
+          FirebaseFirestore.instance.collection('ratings');
+      Map<String, dynamic> ratingData = {
+        'userEmail': user.email,
+        'ratingValue': userRating,
+        'timestamp': FieldValue.serverTimestamp(),
+      };
+
+      await ratingsCollection.doc(employeeEmail).set(ratingData);
+
+      Navigator.of(context).pop();
+    }
+  }
+
+  void directDelivery(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          backgroundColor: Color(0xFF0F112A),
+          title: Text(
+            'Would you like to rate our Service?',
+            style: TextStyle(fontSize: 18),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      showRatingDialog(context);
+                    },
+                    child: Text('Yes'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Color(0xFF1C1E42)),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, MyOrders.id);
+                    },
+                    child: Text('No'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Color(0xFF1C1E42)),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void showRatingDialog(BuildContext context) {
+    int userRating = 0;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              backgroundColor: Color(0xFF0F112A),
+              title: Text(
+                'Rate our Service',
+                style: TextStyle(fontSize: 18),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (index) {
+                      final starColor =
+                          index < userRating ? Colors.yellow : Colors.grey;
+                      return IconButton(
+                        icon: Icon(Icons.star, color: starColor),
+                        onPressed: () {
+                          setState(() {
+                            userRating = index + 1;
+                          });
+                        },
+                      );
+                    }),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      submitRating(userRating);
+                    },
+                    child: Text('Submit'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Color(0xFF1C1E42)),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
