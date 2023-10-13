@@ -54,7 +54,7 @@ class MainApp extends StatelessWidget {
         CashOnDeliveryScreen.id: (context) => CashOnDeliveryScreen(username: '',mobileNumber: '',serviceName: '',),
         OnlinePaymentScreen.id: (context) => OnlinePaymentScreen(username: '',mobileNumber: '',serviceName: '',),
         MyOrders.id: (context) => const MyOrders(),
-        PaymentOnlineScreen.id:(context) => PaymentOnlineScreen(username: '')
+        PaymentOnlineScreen.id:(context) => PaymentOnlineScreen(username: '',)
       },
     );
   }

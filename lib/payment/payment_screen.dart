@@ -16,12 +16,14 @@ class PaymentOnlineScreen extends StatefulWidget {
 class _PaymentOnlineScreenState extends State<PaymentOnlineScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   late TextEditingController _amountController;
+  late TextEditingController _mobileNumberController;
   late Razorpay _razorpay;
 
   @override
   void initState() {
     super.initState();
     _amountController = TextEditingController();
+    _mobileNumberController = TextEditingController();
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerErrorFailure);
@@ -51,6 +53,7 @@ class _PaymentOnlineScreenState extends State<PaymentOnlineScreen> {
   }
 
   int rating = 0;
+
   void updateRating(int newRating) {
     setState(() {
       rating = newRating;
@@ -71,8 +74,8 @@ class _PaymentOnlineScreenState extends State<PaymentOnlineScreen> {
       };
 
       await ratingsCollection.doc(employeeEmail).set(ratingData);
-
-      Navigator.of(context).pop();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MyOrders()));
     }
   }
 
@@ -198,13 +201,13 @@ class _PaymentOnlineScreenState extends State<PaymentOnlineScreen> {
         child: Column(
           children: [
             const SizedBox(
-              height: 100,
+              height: 30,
             ),
             Padding(
               padding: EdgeInsets.all(20),
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: 350,
+                height: 380,
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -214,14 +217,14 @@ class _PaymentOnlineScreenState extends State<PaymentOnlineScreen> {
                     child: Column(
                       children: [
                         const SizedBox(
-                          height: 50,
+                          height: 40,
                         ),
                         Text(
                           "Make a Payment",
                           style: TextStyle(fontSize: 21),
                         ),
                         const SizedBox(
-                          height: 40,
+                          height: 20,
                         ),
                         Padding(
                           padding: EdgeInsets.all(20),
@@ -232,6 +235,20 @@ class _PaymentOnlineScreenState extends State<PaymentOnlineScreen> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "Please enter the amount";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(20),
+                          child: TextFormField(
+                            controller: _mobileNumberController,
+                            decoration: InputDecoration(
+                                hintText: 'Employee Mobile Number'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter the employee's mobile number";
                               }
                               return null;
                             },
@@ -251,7 +268,7 @@ class _PaymentOnlineScreenState extends State<PaymentOnlineScreen> {
                                 "name": "Projects",
                                 "description": "Payment for the project",
                                 "prefill": {
-                                  "contact": "7904093855",
+                                  "contact": _mobileNumberController.text,
                                   "email": "guru01803@gmail.com",
                                 },
                                 "external": {
