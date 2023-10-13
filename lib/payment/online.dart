@@ -1,4 +1,6 @@
-import 'package:customer_service_app_flutter/payment/onlinetransaction.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:customer_service_app_flutter/payment/payment_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class OnlinePaymentScreen extends StatefulWidget {
@@ -16,6 +18,23 @@ class OnlinePaymentScreen extends StatefulWidget {
 }
 
 class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
+  final ordersCollection = FirebaseFirestore.instance.collection('orders');
+  void _placeOrder(BuildContext context) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final documentName = user.email;
+      Map<String, dynamic> orderData = {
+        'username': widget.username,
+        'mobileNumber': widget.mobileNumber,
+        'serviceName': widget.serviceName,
+        'paymentMethod': 'Online payment',
+        'timestamp': FieldValue.serverTimestamp(),
+      };
+      await ordersCollection.doc(documentName).set(orderData);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => PaymentOnlineScreen()));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,8 +94,7 @@ class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
                         child: Center(
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pushNamed(
-                                  context, TransactionScreen.id);
+                              _placeOrder(context);
                             },
                             child: Text('Place Order'),
                             style: ButtonStyle(
