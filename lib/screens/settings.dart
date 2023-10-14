@@ -1,6 +1,6 @@
 import 'package:customer_service_app_flutter/screens/edit_screen.dart';
+import 'package:customer_service_app_flutter/screens/feedback_screen.dart';
 import 'package:customer_service_app_flutter/screens/home.dart';
-import 'package:customer_service_app_flutter/screens/location_screen.dart';
 import 'package:customer_service_app_flutter/screens/login.dart';
 import 'package:customer_service_app_flutter/screens/order_screen.dart';
 import 'package:customer_service_app_flutter/screens/orders.dart';
@@ -164,20 +164,20 @@ class _SettingScreenState extends State<SettingScreen> {
                 color: Colors.white,
               ),
               Options(
-                  icon: Icons.location_on,
-                  text: 'Address & Location',
+                  icon: Icons.notifications_active,
+                  text: 'My Orders',
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, LocationScreen.id);
+                    Navigator.pushReplacementNamed(context, MyOrders.id);
                   }),
               const Divider(
                 height: 6.0,
                 color: Colors.white,
               ),
               Options(
-                  icon: Icons.notifications_active,
-                  text: 'My Orders',
+                  icon: Icons.feedback,
+                  text: 'Feedback',
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, MyOrders.id);
+                    Navigator.pushReplacementNamed(context, FeedbackScreen.id);
                   }),
               const Divider(
                 height: 6.0,

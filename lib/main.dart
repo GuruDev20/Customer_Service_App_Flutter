@@ -5,7 +5,6 @@ import 'package:customer_service_app_flutter/screens/edit_screen.dart';
 import 'package:customer_service_app_flutter/screens/employee.dart';
 import 'package:customer_service_app_flutter/screens/feedback_screen.dart';
 import 'package:customer_service_app_flutter/screens/home.dart';
-import 'package:customer_service_app_flutter/screens/location_screen.dart';
 import 'package:customer_service_app_flutter/screens/login.dart';
 import 'package:customer_service_app_flutter/screens/order_screen.dart';
 import 'package:customer_service_app_flutter/payment/payment.dart';
@@ -43,7 +42,6 @@ class MainApp extends StatelessWidget {
         HomeScreen.id: (context) => const HomeScreen(),
         SettingScreen.id: (context) => const SettingScreen(),
         EditScreen.id: (context) => const EditScreen(),
-        LocationScreen.id: (context) => const LocationScreen(),
         FeedbackScreen.id: (context) => const FeedbackScreen(),
         Orders.id: (context) => Orders(username: '',mobileNumber: '',paymentMethod: '',serviceName: '',),
         UserDetails.id: (context) => const UserDetails(),
@@ -53,7 +51,7 @@ class MainApp extends StatelessWidget {
         PaymentScreen.id: (context) => PaymentScreen(username: '',mobileNumber: '',serviceName: '',),
         CashOnDeliveryScreen.id: (context) => CashOnDeliveryScreen(username: '',mobileNumber: '',serviceName: '',),
         OnlinePaymentScreen.id: (context) => OnlinePaymentScreen(username: '',mobileNumber: '',serviceName: '',),
-        MyOrders.id: (context) => const MyOrders(),
+        MyOrders.id: (context) => MyOrders(),
         PaymentOnlineScreen.id:(context) => PaymentOnlineScreen(username: '',)
       },
     );
