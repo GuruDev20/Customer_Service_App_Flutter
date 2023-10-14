@@ -237,10 +237,6 @@ class _SettingScreenState extends State<SettingScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => Orders(
-                            username: '',
-                            mobileNumber: '',
-                            paymentMethod: '',
-                            serviceName: '',
                           )),
                 );
                 break;

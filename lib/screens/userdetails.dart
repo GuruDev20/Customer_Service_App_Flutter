@@ -187,6 +187,7 @@ class _UserDetailsState extends State<UserDetails> {
 
                     Map<String, dynamic> userData = {
                       'Username': username,
+                      'email': userEmail,
                       'Mobile Number': number,
                       'Location': location,
                       'latitude': latitude,

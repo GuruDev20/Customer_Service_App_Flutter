@@ -1,6 +1,5 @@
 import 'package:customer_service_app_flutter/components/rounded_button.dart';
 import 'package:customer_service_app_flutter/constants.dart';
-import 'package:customer_service_app_flutter/screens/employee.dart';
 import 'package:customer_service_app_flutter/screens/home.dart';
 import 'package:customer_service_app_flutter/screens/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -35,12 +35,14 @@ class _ProcessScreenState extends State<ProcessScreen> {
     fetchCurrentUser();
     fetchReviews(widget.text);
   }
+
   Future<void> fetchCurrentUser() async {
     final user = FirebaseAuth.instance.currentUser;
     setState(() {
       currentUser = user;
     });
   }
+
   Future<void> fetchReviews(String serviceName) async {
     final QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await FirebaseFirestore.instance
@@ -72,7 +74,8 @@ class _ProcessScreenState extends State<ProcessScreen> {
       final double longitude = document['longitude'] ?? 0.0;
       final String username = document['Username'] ?? '';
       final String mobileNumber = document['Mobile Number'] ?? '';
-      final String employeeEmail = document.id; // Use the document ID as email
+      final String employeeEmail =
+          document['email']; // Use the document ID as email
       setState(() {
         selectedEmployeeEmail = employeeEmail;
       });
@@ -236,6 +239,7 @@ class _ProcessScreenState extends State<ProcessScreen> {
                                           mobileNumber:
                                               marker.infoWindow.snippet ?? '',
                                           serviceName: widget.text,
+                                          email: selectedEmployeeEmail,
                                         ),
                                       ),
                                     );

@@ -2,17 +2,19 @@ import 'package:customer_service_app_flutter/screens/orders.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:location/location.dart';
 
 class CashOnDeliveryScreen extends StatefulWidget {
   static const String id = "CashOnDeliveryScreen";
   final String username;
   final String mobileNumber;
   final String serviceName;
-
+  final String email;
   CashOnDeliveryScreen({
     required this.username,
     required this.mobileNumber,
     required this.serviceName,
+    required this.email,
   });
 
   @override
@@ -52,13 +54,18 @@ class _CashOnDeliveryScreenState extends State<CashOnDeliveryScreen> {
     if (user != null) {
       final ordersCollection = FirebaseFirestore.instance.collection('orders');
       final documentName = user.email;
+      final locationData = await _getLocationData();
+
       Map<String, dynamic> orderData = {
         'username': widget.username,
         'mobileNumber': widget.mobileNumber,
+        'email': widget.email,
         'serviceName': widget.serviceName,
         'paymentMethod': 'Cash on Delivery',
         'timestamp': FieldValue.serverTimestamp(),
+        'userLocation': locationData,
       };
+
       await ordersCollection.doc(documentName).set(orderData);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -70,6 +77,29 @@ class _CashOnDeliveryScreenState extends State<CashOnDeliveryScreen> {
     }
   }
 
+  Future<Map<String, double>> _getLocationData() async {
+    Location location = Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+    }
+
+    _locationData = await location.getLocation();
+    return {
+      'latitude': _locationData.latitude!,
+      'longitude': _locationData.longitude!,
+    };
+  }
+
   void directDelivery(BuildContext context) {
     showDialog(
       context: context,
@@ -79,7 +109,7 @@ class _CashOnDeliveryScreenState extends State<CashOnDeliveryScreen> {
             borderRadius: BorderRadius.circular(20),
           ),
           backgroundColor: Color(0xFF0F112A),
-          title: Text(
+          title: const Text(
             'Would you like to rate our Service?',
             style: TextStyle(fontSize: 18),
           ),
@@ -94,7 +124,7 @@ class _CashOnDeliveryScreenState extends State<CashOnDeliveryScreen> {
                       Navigator.of(context).pop();
                       showRatingDialog(context);
                     },
-                    child: Text('Yes'),
+                    child: const Text('Yes'),
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Color(0xFF1C1E42)),

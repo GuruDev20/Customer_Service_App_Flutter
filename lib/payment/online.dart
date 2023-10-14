@@ -2,17 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:customer_service_app_flutter/payment/payment_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 
 class OnlinePaymentScreen extends StatefulWidget {
   static const String id = "online_payment";
   final String username;
   final String mobileNumber;
   final String serviceName;
-
+  final String email;
   OnlinePaymentScreen({
     required this.username,
     required this.mobileNumber,
     required this.serviceName,
+    required this.email,
   });
 
   @override
@@ -25,23 +27,52 @@ class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
   void _placeOrder(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      final documentName = user.email ?? ''; // Use a fallback if email is null.
+      final ordersCollection = FirebaseFirestore.instance.collection('orders');
+      final documentName = user.email;
+      final locationData = await _getLocationData(); // Get user location
+
       Map<String, dynamic> orderData = {
         'username': widget.username,
         'mobileNumber': widget.mobileNumber,
         'serviceName': widget.serviceName,
-        'paymentMethod': 'Online payment',
+        'email': widget.email,
+        'paymentMethod': 'Cash on Delivery',
         'timestamp': FieldValue.serverTimestamp(),
+        'userLocation': locationData, // Include location data in the order
       };
+
       await ordersCollection.doc(documentName).set(orderData);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PaymentOnlineScreen(
+                  username: widget.username,
+                )),
+      );
     }
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => PaymentOnlineScreen(
-                username: widget.username,
-              )),
-    );
+  }
+
+  Future<Map<String, double>> _getLocationData() async {
+    Location location = Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+    }
+
+    _locationData = await location.getLocation();
+    return {
+      'latitude': _locationData.latitude!,
+      'longitude': _locationData.longitude!,
+    };
   }
 
   @override

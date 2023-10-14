@@ -7,12 +7,14 @@ class PaymentScreen extends StatefulWidget {
   final String username;
   final String mobileNumber;
   final String serviceName;
-  PaymentScreen(
-      {Key? key,
-      required this.username,
-      required this.mobileNumber,
-      required this.serviceName,})
-      : super(key: key);
+  final String email;
+  PaymentScreen({
+    Key? key,
+    required this.username,
+    required this.mobileNumber,
+    required this.serviceName,
+    required this.email,
+  }) : super(key: key);
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -131,6 +133,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       username: widget.username,
                                       mobileNumber: widget.mobileNumber,
                                       serviceName: widget.serviceName,
+                                      email:widget.email,
                                     ),
                                   ),
                                 );
@@ -152,6 +155,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       username: widget.username,
                                       mobileNumber: widget.mobileNumber,
                                       serviceName: widget.serviceName,
+                                      email:widget.email,
                                     ),
                                   ),
                                 );

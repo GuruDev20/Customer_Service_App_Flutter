@@ -241,11 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Orders(
-                            username: '',
-                            mobileNumber: '',
-                            paymentMethod: '', serviceName: '',
-                          )),
+                      builder: (context) => Orders()),
                 );
                 break;
               case 2:
