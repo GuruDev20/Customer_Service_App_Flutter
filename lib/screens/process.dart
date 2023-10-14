@@ -1,4 +1,5 @@
 import 'package:customer_service_app_flutter/payment/payment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,17 +20,36 @@ class _ProcessScreenState extends State<ProcessScreen> {
   Set<Marker> markers = Set<Marker>();
   LatLng initialCameraPosition = LatLng(0.0, 0.0);
   bool isTabBarVisible = false;
-
+  User? currentUser;
   Location location = Location();
   Marker? userLocationMarker;
 
   double meanRating = 0.0; // Variable to store the mean rating
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> reviews = [];
 
   @override
   void initState() {
     super.initState();
     fetchEmployeeLocations();
     setupUserLocation();
+    fetchCurrentUser();
+    fetchReviews(widget.text);
+  }
+  Future<void> fetchCurrentUser() async {
+    final user = FirebaseAuth.instance.currentUser;
+    setState(() {
+      currentUser = user;
+    });
+  }
+  Future<void> fetchReviews(String serviceName) async {
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirebaseFirestore.instance
+            .collection('feedback')
+            .where('serviceName', isEqualTo: serviceName)
+            .get();
+    setState(() {
+      reviews = querySnapshot.docs;
+    });
   }
 
   void toggleTabBarVisibility() {
@@ -223,9 +243,27 @@ class _ProcessScreenState extends State<ProcessScreen> {
                                 );
                               },
                             ),
-                            Center(
-                              child: Text('Reviews will be displayed here.'),
-                            ),
+                            if (reviews.isNotEmpty)
+                              ListView.builder(
+                                itemCount: reviews.length,
+                                itemBuilder: (context, index) {
+                                  final review = reviews[index].data();
+                                  final email = review['userEmail'] ?? '';
+                                  final feedback = review['feedback'] ?? '';
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListTile(
+                                      subtitle: Text(email),
+                                      title: Text(feedback),
+                                    ),
+                                  );
+                                },
+                              ),
+                            if (reviews.isEmpty)
+                              Center(
+                                child: Text(
+                                    'No reviews available for this service.'),
+                              ),
                           ],
                         ),
                       ),

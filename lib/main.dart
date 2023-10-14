@@ -42,7 +42,7 @@ class MainApp extends StatelessWidget {
         HomeScreen.id: (context) => const HomeScreen(),
         SettingScreen.id: (context) => const SettingScreen(),
         EditScreen.id: (context) => const EditScreen(),
-        FeedbackScreen.id: (context) => const FeedbackScreen(),
+        FeedbackScreen.id: (context) => FeedbackScreen(),
         Orders.id: (context) => Orders(username: '',mobileNumber: '',paymentMethod: '',serviceName: '',),
         UserDetails.id: (context) => const UserDetails(),
         Employer.id: (context) => const Employer(),
