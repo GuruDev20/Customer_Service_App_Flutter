@@ -24,90 +24,94 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Row(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Hero(
-                  tag: 'logo',
-                  child: Icon(
-                    Icons.miscellaneous_services,
-                    size: 200.0,
-                    color: Colors.white,
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Hero(
+                      tag: 'logo',
+                      child: Icon(
+                        Icons.miscellaneous_services,
+                        size: 200.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 50.0,
+                ),
+                SizedBox(
+                  width: 350.0,
+                  child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          email = value;
+                        });
+                      },
+                      decoration: textdecorationstyle.copyWith(
+                          hintText: 'Enter your email')),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                SizedBox(
+                  width: 350.0,
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        password = value;
+                      });
+                    },
+                    decoration: textdecorationstyle.copyWith(
+                        hintText: 'Enter your password'),
+                    obscureText: true,
                   ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                RoundedButton(
+                  colour: Colors.lightBlueAccent,
+                  title: 'Log In',
+                  onPressed: () async {
+                    try {
+                      final user = await _auth.signInWithEmailAndPassword(
+                        email: email,
+                        password: password,
+                      );
+          
+                      if (user != null) {
+                        checkUserTypeAndNavigate(email);
+                      }
+                    } catch (e) {
+                      print('Wrong password provided for that user.');
+                    }
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Don\'t have an account?'),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        primary: Colors.blueAccent,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, RegisterScreen.id);
+                      },
+                      child: const Text('Register'),
+                    ),
+                  ],
                 ),
               ],
             ),
-            const SizedBox(
-              height: 50.0,
-            ),
-            SizedBox(
-              width: 350.0,
-              child: TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      email = value;
-                    });
-                  },
-                  decoration: textdecorationstyle.copyWith(
-                      hintText: 'Enter your email')),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            SizedBox(
-              width: 350.0,
-              child: TextField(
-                onChanged: (value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
-                decoration: textdecorationstyle.copyWith(
-                    hintText: 'Enter your password'),
-                obscureText: true,
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            RoundedButton(
-              colour: Colors.lightBlueAccent,
-              title: 'Log In',
-              onPressed: () async {
-                try {
-                  final user = await _auth.signInWithEmailAndPassword(
-                    email: email,
-                    password: password,
-                  );
-
-                  if (user != null) {
-                    checkUserTypeAndNavigate(email);
-                  }
-                } catch (e) {
-                  print('Wrong password provided for that user.');
-                }
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Don\'t have an account?'),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    primary: Colors.blueAccent,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, RegisterScreen.id);
-                  },
-                  child: const Text('Register'),
-                ),
-              ],
-            ),
-          ],
+          ),
         ),
       ),
     );
