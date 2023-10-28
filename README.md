@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+Firebase collections
+userDetails----->useremail----->Location,Mobile Number,type,Username
+employeeDetails------>email----->Location,mobile,type,username,email,latitude,longitude,profession
+feedback------>feedback,servicename,useremail
+ratings----->username----->ratingValue,useremail
+orders------->email------->email,mobile,paymentmethod,servicename,username,userlocation(latitude,longitude)
