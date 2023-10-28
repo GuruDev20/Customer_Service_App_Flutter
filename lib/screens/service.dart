@@ -53,8 +53,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 9, 11, 28),
           leading: Icon(
@@ -216,7 +215,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 ],
           selectedItemColor: Colors.white,
         ),
-      ),
     );
   }
 }

@@ -165,8 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 9, 11, 28),
@@ -302,7 +301,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
           selectedItemColor: Colors.white,
         ),
-      ),
     );
   }
 }

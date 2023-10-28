@@ -8,8 +8,7 @@ class WelcomeScreen extends StatelessWidget {
   static const String id = "welcome_screen";
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Scaffold(
+    return Scaffold(
           body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -55,8 +54,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
             ],
           ),
-        )
-      ),
+          ),
     );
   }
 }
