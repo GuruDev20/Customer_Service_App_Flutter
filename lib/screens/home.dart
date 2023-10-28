@@ -165,141 +165,143 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 9, 11, 28),
-        leading: Icon(
-          Icons.miscellaneous_services,
-          size: 35.0,
-          color: Colors.white,
-        ),
-        title: Text(
-          'Customer Service',
-          style: TextStyle(fontSize: 25.0),
-        ),
-        titleSpacing: 0,
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 10.0),
-            child: GestureDetector(
-              onTap: () {
-                showUserDetails();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.fromARGB(255, 133, 130, 130),
-                ),
-                child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  child: Text(
-                    loggedInUsername != null && loggedInUsername!.isNotEmpty
-                        ? loggedInUsername![0].toUpperCase()
-                        : '',
-                    style: TextStyle(color: Colors.white),
+    return SingleChildScrollView(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 9, 11, 28),
+          leading: Icon(
+            Icons.miscellaneous_services,
+            size: 35.0,
+            color: Colors.white,
+          ),
+          title: Text(
+            'Customer Service',
+            style: TextStyle(fontSize: 25.0),
+          ),
+          titleSpacing: 0,
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child: GestureDetector(
+                onTap: () {
+                  showUserDetails();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color.fromARGB(255, 133, 130, 130),
+                  ),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: Text(
+                      loggedInUsername != null && loggedInUsername!.isNotEmpty
+                          ? loggedInUsername![0].toUpperCase()
+                          : '',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: userLatLng ?? LatLng(0, 0),
-          zoom: 15.0,
+          ],
         ),
-        onMapCreated: (GoogleMapController controller) {
-          setState(() {
-            _controller = controller;
-          });
-        },
-        markers: userLatLng != null
-            ? {
-                Marker(
-                  markerId: MarkerId('user_location'),
-                  position: userLatLng!,
-                  icon: BitmapDescriptor.defaultMarker,
-                  infoWindow: InfoWindow(title: 'User Location'),
-                ),
+        body: GoogleMap(
+          initialCameraPosition: CameraPosition(
+            target: userLatLng ?? LatLng(0, 0),
+            zoom: 15.0,
+          ),
+          onMapCreated: (GoogleMapController controller) {
+            setState(() {
+              _controller = controller;
+            });
+          },
+          markers: userLatLng != null
+              ? {
+                  Marker(
+                    markerId: MarkerId('user_location'),
+                    position: userLatLng!,
+                    icon: BitmapDescriptor.defaultMarker,
+                    infoWindow: InfoWindow(title: 'User Location'),
+                  ),
+                }
+              : {},
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Color.fromARGB(255, 9, 11, 28),
+          currentIndex: _currentIndex,
+          onTap: (int index) {
+            setState(() {
+              _currentIndex = index;
+            });
+            if (userType == UserType.Employee) {
+              switch (index) {
+                case 0:
+                  break;
+                case 1:
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Orders()),
+                  );
+                  break;
+                case 2:
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingScreen()),
+                  );
+                  break;
               }
-            : {},
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromARGB(255, 9, 11, 28),
-        currentIndex: _currentIndex,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-          if (userType == UserType.Employee) {
-            switch (index) {
-              case 0:
-                break;
-              case 1:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Orders()),
-                );
-                break;
-              case 2:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SettingScreen()),
-                );
-                break;
+            } else {
+              switch (index) {
+                case 0:
+                  break;
+                case 1:
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ServicesScreen()),
+                  );
+                  break;
+                case 2:
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingScreen()),
+                  );
+                  break;
+              }
             }
-          } else {
-            switch (index) {
-              case 0:
-                break;
-              case 1:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ServicesScreen()),
-                );
-                break;
-              case 2:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SettingScreen()),
-                );
-                break;
-            }
-          }
-        },
-        items: userType == UserType.Employee
-            ? [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home, color: Colors.white),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart, color: Colors.white),
-                  label: 'Orders',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.settings, color: Colors.white),
-                  label: 'Settings',
-                ),
-              ]
-            : [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home, color: Colors.white),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.search, color: Colors.white),
-                  label: 'Services',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.settings, color: Colors.white),
-                  label: 'Settings',
-                ),
-              ],
-        selectedItemColor: Colors.white,
+          },
+          items: userType == UserType.Employee
+              ? [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home, color: Colors.white),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.shopping_cart, color: Colors.white),
+                    label: 'Orders',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings, color: Colors.white),
+                    label: 'Settings',
+                  ),
+                ]
+              : [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home, color: Colors.white),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.search, color: Colors.white),
+                    label: 'Services',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings, color: Colors.white),
+                    label: 'Settings',
+                  ),
+                ],
+          selectedItemColor: Colors.white,
+        ),
       ),
     );
   }
