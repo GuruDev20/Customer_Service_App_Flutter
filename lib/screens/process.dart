@@ -152,7 +152,7 @@ class _ProcessScreenState extends State<ProcessScreen> {
                         ),
                         Container(
                           height: 50,
-                          width: 340,
+                          width: 320, 
                           child: Card(
                             color: Colors.white,
                             shape: RoundedRectangleBorder(

@@ -1,3 +1,4 @@
+import 'package:customer_service_app_flutter/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,10 +19,12 @@ class _OrdersState extends State<Orders> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF090B1C),
-        leading: Icon(
-          Icons.miscellaneous_services,
-          size: 35.0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
           color: Colors.white,
+          onPressed: () {
+            Navigator.pushNamed(context, SettingScreen.id);
+          },
         ),
         title: Text(
           'Orders',
