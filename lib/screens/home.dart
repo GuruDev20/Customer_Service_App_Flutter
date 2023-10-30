@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     fetchUser();
     requestLocationPermission();
+    getUserLocation();
   }
 
   void showUserDetails() {

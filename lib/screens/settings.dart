@@ -91,7 +91,7 @@ class _SettingScreenState extends State<SettingScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Divider(
-                color: Color.fromARGB(255, 246, 97, 147),
+                color: Colors.white,
                 height: 12.0,
                 thickness: 4.0,
               ),

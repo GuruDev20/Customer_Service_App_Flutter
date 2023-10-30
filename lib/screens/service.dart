@@ -73,7 +73,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Divider(
-                  color: Color.fromARGB(255, 246, 97, 147),
+                  color: Colors.white,
                   height: 12.0,
                   thickness: 4.0,
                 ),
@@ -234,7 +234,7 @@ class Services extends StatelessWidget {
         child: Card(
           color: Color.fromARGB(255, 15, 17, 42),
           elevation: 10.0,
-          shadowColor: Color.fromARGB(255, 246, 97, 147),
+          shadowColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
